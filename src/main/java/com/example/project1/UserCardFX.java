@@ -25,7 +25,7 @@ public class UserCardFX extends Application {
 
 
     @FXML
-    private ListView<UserData> CardLV;
+    private ListView<String> CardLV;
     @FXML
     private  Button addCard;
     @FXML
@@ -57,7 +57,8 @@ public class UserCardFX extends Application {
 
 
             for (UserData user : userList) {
-                controller.CardLV.getItems().add(user);
+                String userD = user.displayUser();
+                controller.CardLV.getItems().add(userD);
             }
 
 
@@ -70,14 +71,12 @@ public class UserCardFX extends Application {
     }
 
     private void refreshList(){
-//        CardLV.getItems().clear(); // Clear the existing items in the ListView
-//        List<UserData> userList = FetchFromDB.fetchUserData();
-//        for (UserData user : userList) {
-//            String UserD = user.displayUser();
-//            CardLV.getItems().add(UserD);
-//        }
         CardLV.getItems().clear(); // Clear the existing items in the ListView
-        CardLV.getItems().addAll(userList);
+        List<UserData> userList = FetchFromDB.fetchUserData();
+        for (UserData user : userList) {
+            String UserD = user.displayUser();
+            CardLV.getItems().add(UserD);
+        }
     }
 
     public void addUserCard() {
@@ -139,8 +138,7 @@ public class UserCardFX extends Application {
         AddToDB.insertIntoDB(new_user);
 
         // Add the new_user directly to the ListView
-        CardLV.getItems().add(new_user);
-
+        refreshList();
         // Close the stage (dialog)
         ((Stage) firstNameField.getScene().getWindow()).close();
 
