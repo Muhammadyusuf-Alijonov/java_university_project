@@ -1,16 +1,17 @@
 package com.example.project1;
+
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.function.ToIntFunction;
 
 public class UserCardFX extends Application {
 
@@ -25,11 +26,9 @@ public class UserCardFX extends Application {
 
 
     @FXML
-    private ListView<String> CardLV;
+    private FlowPane userCardsContainer;
     @FXML
     private  Button addCard;
-    @FXML
-    private Button deleteCard;
 
     List<UserData> userList = FetchFromDB.fetchUserData();
 
@@ -42,7 +41,7 @@ public class UserCardFX extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        primaryStage.setTitle("User Card Manager");
+        primaryStage.setTitle("Hotel Clients Manager");
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(UserCardFX.class.getResource("hello-view.fxml"));
@@ -51,14 +50,15 @@ public class UserCardFX extends Application {
             // Assuming that the controller is set in the FXML file, you can retrieve it like this:
             UserCardFX controller = fxmlLoader.getController();
 
-            if (controller.CardLV == null) {
-                System.err.println("Error: CardLV is null");
+            if (controller.userCardsContainer == null) {
+                System.err.println("Error: userCardsContainer is null");
             }
 
-
             for (UserData user : userList) {
-                String userD = user.displayUser();
-                controller.CardLV.getItems().add(userD);
+                UserCard userCard = new UserCard(user, controller);
+                controller.userCardsContainer.getChildren().add(userCard);
+
+                FlowPane.setMargin(userCard,new Insets(10));
             }
 
 
@@ -70,12 +70,14 @@ public class UserCardFX extends Application {
         }
     }
 
-    private void refreshList(){
-        CardLV.getItems().clear(); // Clear the existing items in the ListView
+    protected void refreshList() {
+        userCardsContainer.getChildren().clear();
         List<UserData> userList = FetchFromDB.fetchUserData();
         for (UserData user : userList) {
-            String UserD = user.displayUser();
-            CardLV.getItems().add(UserD);
+            UserCard userCard = new UserCard(user, this);
+            userCardsContainer.getChildren().add(userCard);
+
+            FlowPane.setMargin(userCard, new Insets(10));
         }
     }
 
@@ -120,7 +122,7 @@ public class UserCardFX extends Application {
         GridPane.setColumnIndex(okButton, 1);
         GridPane.setColumnIndex(cancelButton, 2);
 
-        Scene scene = new Scene(grid, 400, 300);
+        Scene scene = new Scene(grid, 500, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -143,46 +145,4 @@ public class UserCardFX extends Application {
         ((Stage) firstNameField.getScene().getWindow()).close();
 
     }
-
-    public void deleteSelected() {
-
-        Stage primaryStage = new Stage();
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(20, 20, 20, 20));
-        grid.setVgap(10);
-        grid.setHgap(10);
-
-        grid.add(new Label("Delete user"), 0, 0);
-        grid.add(delete_user, 1, 0);
-
-        Button okButton = new Button("Delete");
-        okButton.setOnAction(e -> handleDeleteButton());
-        grid.add(okButton, 0, 2);
-
-        Button cancelButton = new Button("Cancel");
-        cancelButton.setOnAction(e -> primaryStage.close());
-        grid.add(cancelButton, 1, 2);
-
-        GridPane.setColumnIndex(okButton, 1);
-        GridPane.setColumnIndex(cancelButton, 2);
-
-        Scene scene = new Scene(grid, 400, 300);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Warning");
-//            alert.setHeaderText(null);
-//            alert.setContentText("No user cards selected.");
-//            alert.showAndWait();
-//        }
-    }
-
-    private void handleDeleteButton() {
-        Delete.deleteUser(delete_user.getText());
-        refreshList();
-        ((Stage) delete_user.getScene().getWindow()).close();
-    }
-
 }
