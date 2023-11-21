@@ -17,20 +17,13 @@ public class AddToDB {
             stmt.setInt(5,user.getReservedRoom());
             stmt.setString(6,user.getReservationPeriod());
 
-            int rowAffected = stmt.executeUpdate();
-
-            if (rowAffected > 0){
-                System.out.println("User added to Database successfully!");
-            }
+            stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("User not added to Database, error occurred!");
             throw new RuntimeException(e);
         }
     }
     public static void addToDb(String fname, String sname, String passport, String email, int reserved_room, String reservation_period){
         UserData user = new UserData(fname, sname, passport, email, reserved_room, reservation_period);
         AddToDB.insertIntoDB(user);
-        System.out.println("Updated Database:");
-        FetchFromDB.fetchedData();
     }
 }
