@@ -86,7 +86,7 @@ public class UserCardFX extends Application {
 
         Stage primaryStage = new Stage();
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(20, 20, 20, 20));
+        grid.setPadding(new Insets(20));
         grid.setVgap(10);
         grid.setHgap(10);
 
@@ -136,13 +136,30 @@ public class UserCardFX extends Application {
         String room = reserved_room.getText();
 
         UserData new_user = new UserData(firstName, lastName, passport, email, Integer.parseInt(room), period);
+        boolean rowAffected = AddToDB.insertIntoDB(new_user);
 
-        AddToDB.insertIntoDB(new_user);
+        Stage primaryStage = new Stage();
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(20));
+        grid.setVgap(10);
+        grid.setHgap(10);
 
-        // Add the new_user directly to the ListView
-        refreshList();
-        // Close the stage (dialog)
-        ((Stage) firstNameField.getScene().getWindow()).close();
+        if (rowAffected) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Customer added!");
+            alert.setTitle("Customer added!");
+            alert.setContentText("Customer information added to database is added successfully! Feel free to close this window");
+            alert.showAndWait();
+
+            refreshList();
+            ((Stage) firstNameField.getScene().getWindow()).close();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Customer did Not added!");
+            alert.setHeaderText("Customer did Not added!");
+            alert.setContentText("Customer information did Not added to database, the customer with the following  passport number: " + new_user.getPassportNum() + " already exist in database! Please provide valid Customer information!");
+            alert.showAndWait();
+        }
 
     }
 }
