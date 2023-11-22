@@ -49,9 +49,9 @@ public class UserCardFX extends Application {
             // Assuming that the controller is set in the FXML file, we can retrieve it like this:
             UserCardFX controller = fxmlLoader.getController();
 
-            if (controller.userCardsContainer == null) {
-                System.err.println("Error: userCardsContainer is null");
-            }
+//            if (controller.userCardsContainer == null) {
+//                System.err.println("Error: userCardsContainer is null");
+//            }
 
             for (UserData user : userList) {
                 UserCard userCard = new UserCard(user, controller);
@@ -147,16 +147,16 @@ public class UserCardFX extends Application {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Customer added!");
             alert.setTitle("Customer added!");
-            alert.setContentText("Customer information added to database is added successfully! Feel free to close this window");
+            alert.setContentText("Customer information is added to database successfully! Feel free to close this window");
             alert.showAndWait();
 
             refreshList();
             ((Stage) firstNameField.getScene().getWindow()).close();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Customer did Not added!");
-            alert.setHeaderText("Customer did Not added!");
-            alert.setContentText("Customer information did Not added to database, the customer with the following  passport number: " + new_user.getPassportNum() + " already exist in database! Please provide valid Customer information!");
+            alert.setTitle("Customer was Not added!");
+            alert.setHeaderText("Customer was Not added!");
+            alert.setContentText("Customer information did Not added to database, the customer with the following passport number: " + new_user.getPassportNum() + " is already exist in database! Please provide valid Customer information!");
             alert.showAndWait();
         }
 
