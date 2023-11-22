@@ -1,6 +1,6 @@
 package com.example.project1;
 
-class UserData {
+public class UserData {
     private String firstName;
     private String secondName;
     private String passportNum;

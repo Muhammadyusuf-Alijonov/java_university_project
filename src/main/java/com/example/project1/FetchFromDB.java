@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Class to fetch the data from Database
-public class FetchFromDB {
+public abstract class FetchFromDB {
     public static List<UserData> fetchUserData(){
         List<UserData> userList = new ArrayList<>();
 

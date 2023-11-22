@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 // Class to connect to DB using JDBC
-public class DBConnection {
+public abstract class DBConnection {
     // Connection method
     // Connection to Database using JDBC driver
     public static Connection connection (){

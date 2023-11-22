@@ -22,7 +22,6 @@ public class UserCardFX extends Application {
     private final TextField reservation_period = new TextField();
     private final TextField Client_email = new TextField();
     private final TextField reserved_room = new TextField();
-    private final TextField delete_user = new TextField();
 
 
     @FXML
@@ -61,10 +60,10 @@ public class UserCardFX extends Application {
                 FlowPane.setMargin(userCard,new Insets(10));
             }
 
-
             Scene scene = fmx_scene;
             primaryStage.setScene(scene);
             primaryStage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

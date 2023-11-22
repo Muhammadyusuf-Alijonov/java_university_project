@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 // Class to delete the user from the Database
-public class Delete {
+public abstract class Delete {
 
     public static void deleteFromDB(String passport){
         List<UserData> userList = FetchFromDB.fetchUserData();

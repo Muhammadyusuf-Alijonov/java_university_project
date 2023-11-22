@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 // Class to add the data to Database
-public class AddToDB {
+public abstract class AddToDB {
     public static boolean insertIntoDB(UserData user){
         try {
             Connection connection = DBConnection.connection();
