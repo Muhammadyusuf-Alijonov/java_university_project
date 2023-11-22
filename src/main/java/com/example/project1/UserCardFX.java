@@ -46,7 +46,7 @@ public class UserCardFX extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(UserCardFX.class.getResource("hello-view.fxml"));
             Scene fmx_scene = new Scene(fxmlLoader.load());
 
-            // Assuming that the controller is set in the FXML file, you can retrieve it like this:
+            // Assuming that the controller is set in the FXML file, we can retrieve it like this:
             UserCardFX controller = fxmlLoader.getController();
 
             if (controller.userCardsContainer == null) {

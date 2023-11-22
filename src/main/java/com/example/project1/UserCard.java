@@ -24,27 +24,30 @@ public class UserCard extends BorderPane {
         setMaxHeight(400);
         setPadding(new Insets(20));
 
+        // Here we customize the style of the user cards
         setStyle("-fx-border-color: Gray; -fx-border-width: 2px; -fx-background-color: #f0f0f0; -fx-background-radius: 10; -fx-border-radius: 10; -fx-font-family: sans-serif;");
 
         // Display user information in a VBox
         VBox userInfoBox = new VBox(5);
         userInfoBox.setPadding(new Insets(5));
 
+        // showing the data of user fetched from database in user cards
         userInfoBox.getChildren().add(new Label("Name: " + user.getFirstName() + " " + user.getSecondName()));
         userInfoBox.getChildren().add(new Label("Passport: " + user.getPassportNum()));
         userInfoBox.getChildren().add(new Label("Email: " + user.getEmail()));
         userInfoBox.getChildren().add(new Label("Reserved Room: " + user.getReservedRoom()));
         userInfoBox.getChildren().add(new Label("Reservation Period: " + user.getReservationPeriod()));
 
-        // Example: Add a button for some action related to the user
+        // Here we create button Delete user for all user cards to easily delete the user card and user information from the database
         Button actionButton = new Button("Delete customer");
         actionButton.setOnAction(event -> handleActionButton());
         userInfoBox.getChildren().add(actionButton);
 
+        // centering the outputting data inside the user card
         setCenter(userInfoBox);
     }
 
-
+    // simple function to handle action button "Delete user" inside the user cards
     private void handleActionButton() {
         Delete.deleteUser(user.getPassportNum());
         controller.refreshList();
