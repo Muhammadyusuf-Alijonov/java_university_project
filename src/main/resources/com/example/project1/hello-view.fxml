@@ -6,10 +6,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="808.0" prefWidth="1304.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.UserCardFX">
    <center>
-      <!-- Use FlowPane as a container for user cards -->
-      <FlowPane fx:id="userCardsContainer" hgap="10" vgap="10">
-         <!-- User cards will be added horizontally and wrap to the next row if needed -->
-      </FlowPane>
+      <FlowPane fx:id="userCardsContainer" hgap="10" vgap="10"></FlowPane>
    </center>
    <top>
       <Button fx:id="addCard" mnemonicParsing="false" onAction="#addUserCard" prefHeight="53.0" prefWidth="211.0" text="Add Hotel Client" BorderPane.alignment="TOP_RIGHT" />

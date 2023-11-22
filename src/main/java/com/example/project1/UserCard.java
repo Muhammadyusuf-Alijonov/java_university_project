@@ -24,7 +24,7 @@ public class UserCard extends BorderPane {
         setMaxHeight(400);
         setPadding(new Insets(20));
 
-        setStyle("-fx-border-color: Gray; -fx-border-width: 1px; -fx-background-color: #f0f0f0;");
+        setStyle("-fx-border-color: Gray; -fx-border-width: 2px; -fx-background-color: #f0f0f0; -fx-background-radius: 10; -fx-border-radius: 10; -fx-font-family: sans-serif;");
 
         // Display user information in a VBox
         VBox userInfoBox = new VBox(5);
