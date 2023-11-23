@@ -5,11 +5,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,6 +44,9 @@ public class UserCardFX extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         primaryStage.setTitle("Hotel Clients Manager");
+        File icon = new File("src/main/icons/hotel.png");
+        String iconUrl = icon.toURI().toURL().toString();
+        primaryStage.getIcons().add(new Image(iconUrl));
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(UserCardFX.class.getResource("hello-view.fxml"));
@@ -48,10 +54,6 @@ public class UserCardFX extends Application {
 
             // Assuming that the controller is set in the FXML file, we can retrieve it like this:
             UserCardFX controller = fxmlLoader.getController();
-
-//            if (controller.userCardsContainer == null) {
-//                System.err.println("Error: userCardsContainer is null");
-//            }
 
             for (UserData user : userList) {
                 UserCard userCard = new UserCard(user, controller);
@@ -124,6 +126,8 @@ public class UserCardFX extends Application {
         Scene scene = new Scene(grid, 500, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        addCard.setStyle("-fx-background-color:#00BFFF ;");
     }
 
     private void handleOkButton() {

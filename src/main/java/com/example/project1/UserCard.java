@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class UserCard extends BorderPane {
 
@@ -43,6 +44,8 @@ public class UserCard extends BorderPane {
         actionButton.setOnAction(event -> handleActionButton());
         userInfoBox.getChildren().add(actionButton);
 
+
+        actionButton.setStyle("-fx-background-color: #f95959; -fx-text-fill: White;");
         // centering the outputting data inside the user card
         setCenter(userInfoBox);
     }
