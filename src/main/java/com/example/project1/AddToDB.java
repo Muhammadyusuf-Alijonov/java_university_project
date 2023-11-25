@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 // Class to add the data to Database
 public abstract class AddToDB {
-    public static boolean insertIntoDB(UserData user){
+    public static boolean insertIntoDB(SingleUserData user){
         try {
             Connection connection = DBConnection.connection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO clients_data (first_name, second_name, passport, email, reserved_room, reservation_period) VALUES(?,?,?,?,?,?)");
@@ -25,7 +25,8 @@ public abstract class AddToDB {
         }
     }
     public static void addToDb(String fname, String sname, String passport, String email, int reserved_room, String reservation_period){
-        UserData user = new UserData(fname, sname, passport, email, reserved_room, reservation_period);
+        SingleUserData user = SingleUserData.getInstance();
+        user.setAll(fname, sname, passport, email, reserved_room, reservation_period);
         AddToDB.insertIntoDB(user);
     }
 }

@@ -8,12 +8,15 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserCardFX extends Application {
@@ -32,7 +35,7 @@ public class UserCardFX extends Application {
     @FXML
     private  Button addCard;
 
-    List<UserData> userList = FetchFromDB.fetchUserData();
+    ResultSet resultSet = FetchFromDB.fetchUserData();
 
     public static void main(String[] args) {
         launch(args);
@@ -55,11 +58,19 @@ public class UserCardFX extends Application {
             // Assuming that the controller is set in the FXML file, we can retrieve it like this:
             UserCardFX controller = fxmlLoader.getController();
 
-            for (UserData user : userList) {
-                UserCard userCard = new UserCard(user, controller);
-                controller.userCardsContainer.getChildren().add(userCard);
+            while (true) {
+                try{
+                    if(!resultSet.next()) break;
 
-                FlowPane.setMargin(userCard,new Insets(10));
+                    SingleUserData user = SingleUserData.getInstance();
+                    user.setAll(resultSet.getString("first_name"),resultSet.getString("second_name"),resultSet.getString("passport"),resultSet.getString("email"),resultSet.getInt("reserved_room"),resultSet.getString("reservation_period"));
+
+                    UserCard userCard = new UserCard(controller);
+                    controller.userCardsContainer.getChildren().add(userCard);
+                    FlowPane.setMargin(userCard,new Insets(10));
+                } catch (SQLException e){
+                    throw new RuntimeException();
+                }
             }
 
             Scene scene = fmx_scene;
@@ -73,12 +84,22 @@ public class UserCardFX extends Application {
 
     protected void refreshList() {
         userCardsContainer.getChildren().clear();
-        List<UserData> userList = FetchFromDB.fetchUserData();
-        for (UserData user : userList) {
-            UserCard userCard = new UserCard(user, this);
-            userCardsContainer.getChildren().add(userCard);
+        ResultSet resultSet = FetchFromDB.fetchUserData();
+        while(true){
+            try {
+                if (!resultSet.next()) break;
 
-            FlowPane.setMargin(userCard, new Insets(10));
+                SingleUserData user = SingleUserData.getInstance();
+                user.setAll(resultSet.getString("first_name"),resultSet.getString("second_name"),resultSet.getString("passport"),resultSet.getString("email"),resultSet.getInt("reserved_room"),resultSet.getString("reservation_period"));
+
+                UserCard userCard = new UserCard(this);
+                userCardsContainer.getChildren().add(userCard);
+                FlowPane.setMargin(userCard, new Insets(10));
+
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -138,8 +159,9 @@ public class UserCardFX extends Application {
         String email = Client_email.getText();
         String room = reserved_room.getText();
 
-        UserData new_user = new UserData(firstName, lastName, passport, email, Integer.parseInt(room), period);
-        boolean rowAffected = AddToDB.insertIntoDB(new_user);
+        SingleUserData user = SingleUserData.getInstance();
+        user.setAll(firstName, lastName, passport, email, Integer.parseInt(room), period);
+        boolean rowAffected = AddToDB.insertIntoDB(user);
 
         Stage primaryStage = new Stage();
         GridPane grid = new GridPane();
@@ -160,7 +182,7 @@ public class UserCardFX extends Application {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Customer was Not added!");
             alert.setHeaderText("Customer was Not added!");
-            alert.setContentText("Customer information did Not added to database, the customer with the following passport number: " + new_user.getPassportNum() + " is already exist in database! Please provide valid Customer information!");
+            alert.setContentText("Customer information did Not added to database, the customer with the following passport number: " + user.getPassportNum() + " is already exist in database! Please provide valid Customer information!");
             alert.showAndWait();
         }
 

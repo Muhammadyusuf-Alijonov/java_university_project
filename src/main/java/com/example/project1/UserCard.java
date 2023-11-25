@@ -5,16 +5,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 public class UserCard extends BorderPane {
 
-    private final UserData user;
+    String passportNumber;
+    SingleUserData user = SingleUserData.getInstance();
     private final UserCardFX controller;
 
-    public UserCard(UserData user, UserCardFX controller) {
-        this.user = user;
+    public UserCard(UserCardFX controller) {
         this.controller = controller;
+        passportNumber = user.getPassportNum();
 
         // Customize the appearance of the user card
         setMinWidth(200);
@@ -52,7 +52,7 @@ public class UserCard extends BorderPane {
 
     // simple function to handle action button "Delete user" inside the user cards
     private void handleActionButton() {
-        Delete.deleteUser(user.getPassportNum());
+        Delete.deleteUser(passportNumber);
         controller.refreshList();
     }
 }
