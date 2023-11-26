@@ -2,7 +2,7 @@ package com.example.project1;
 
 public class SingleUserData {
 
-    private static SingleUserData instance = new SingleUserData();
+    private static SingleUserData instance = new SingleUserData(); //Single instance of the object SingleUserData
     private String firstName;
     private String secondName;
     private String passportNum;
@@ -44,25 +44,9 @@ public class SingleUserData {
     public int getReservedRoom(){ return reserved_room; }
     public String getReservationPeriod(){ return  reservation_period;}
 
-    public static SingleUserData getInstance(){ return instance; }
+    public static SingleUserData getInstance(){ return instance; }//allows use of instance in the program
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setSecondName(String secondName) { this.secondName = secondName;}
-
-    public void setPassportNum(String passportNum) {
-        this.passportNum = passportNum;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setReservedRoom(int reserved_room){ this.reserved_room = reserved_room; }
-    public void setReservationPeriod(String reservation_period){ this.reservation_period = reservation_period;}
-
+    //Used when fetching from or adding to the database
     public void setAll(String firstName, String secondName, String passportNum, String email, int reserved_room, String reservation_period){
         this.firstName = firstName;
         this.secondName = secondName;

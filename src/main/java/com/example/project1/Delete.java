@@ -11,11 +11,11 @@ public abstract class Delete {
 
     public static void deleteFromDB(String passport){
         ResultSet resultSet = FetchFromDB.fetchUserData();
+        SingleUserData user = SingleUserData.getInstance();
         while(true){
             try {
                 if (!resultSet.next()) break;
 
-                SingleUserData user = SingleUserData.getInstance();
                 user.setAll(resultSet.getString("first_name"),resultSet.getString("second_name"),resultSet.getString("passport"),resultSet.getString("email"),resultSet.getInt("reserved_room"),resultSet.getString("reservation_period"));
 
                 if (user.getPassportNum().equals(passport)){

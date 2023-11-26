@@ -57,12 +57,11 @@ public class UserCardFX extends Application {
 
             // Assuming that the controller is set in the FXML file, we can retrieve it like this:
             UserCardFX controller = fxmlLoader.getController();
-
+            SingleUserData user = SingleUserData.getInstance();
             while (true) {
                 try{
                     if(!resultSet.next()) break;
 
-                    SingleUserData user = SingleUserData.getInstance();
                     user.setAll(resultSet.getString("first_name"),resultSet.getString("second_name"),resultSet.getString("passport"),resultSet.getString("email"),resultSet.getInt("reserved_room"),resultSet.getString("reservation_period"));
 
                     UserCard userCard = new UserCard(controller);
@@ -85,11 +84,11 @@ public class UserCardFX extends Application {
     protected void refreshList() {
         userCardsContainer.getChildren().clear();
         ResultSet resultSet = FetchFromDB.fetchUserData();
+        SingleUserData user = SingleUserData.getInstance();
         while(true){
             try {
                 if (!resultSet.next()) break;
 
-                SingleUserData user = SingleUserData.getInstance();
                 user.setAll(resultSet.getString("first_name"),resultSet.getString("second_name"),resultSet.getString("passport"),resultSet.getString("email"),resultSet.getInt("reserved_room"),resultSet.getString("reservation_period"));
 
                 UserCard userCard = new UserCard(this);
