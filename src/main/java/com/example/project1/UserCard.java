@@ -1,10 +1,14 @@
 package com.example.project1;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class UserCard extends BorderPane {
 
@@ -52,7 +56,22 @@ public class UserCard extends BorderPane {
 
     // simple function to handle action button "Delete user" inside the user cards
     private void handleActionButton() {
-        Delete.deleteUser(passportNumber);
-        controller.refreshList();
+        Stage primaryStage = new Stage();
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(20));
+        grid.setVgap(10);
+        grid.setHgap(10);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Warning!");
+        alert.setHeaderText("Are you sure to delete this Customer?");
+        alert.setContentText("Are you sure to delete this Customer data from database?");
+
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        if (result == ButtonType.OK){
+            Delete.deleteUser(passportNumber);
+            controller.refreshList();
+        }
     }
 }

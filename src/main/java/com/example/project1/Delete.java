@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 // Class to delete the user from the Database
 public abstract class Delete {
@@ -33,6 +32,7 @@ public abstract class Delete {
 
     }
 
+    // This method used to use the method above in GUI
     public static void deleteUser(String passport){
         Delete.deleteFromDB(passport);
     }
