@@ -13,14 +13,10 @@ import javafx.geometry.Insets;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class UserCardFX extends Application {
-
 
     private final TextField firstNameField = new TextField();
     private final TextField lastNameField = new TextField();
@@ -40,8 +36,6 @@ public class UserCardFX extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -136,9 +130,13 @@ public class UserCardFX extends Application {
         okButton.setOnAction(e -> handleOkButton());
         grid.add(okButton, 0, 6);
 
+        okButton.setStyle("-fx-background-color: #5585b5; -fx-text-fill: White;");
+
         Button cancelButton = new Button("Cancel");
         cancelButton.setOnAction(e -> primaryStage.close());
         grid.add(cancelButton, 1, 6);
+
+        cancelButton.setStyle("-fx-background-color: #f95959; -fx-text-fill: White;");
 
         GridPane.setColumnIndex(okButton, 1);
         GridPane.setColumnIndex(cancelButton, 2);
